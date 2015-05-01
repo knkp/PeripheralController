@@ -1,4 +1,6 @@
 #pragma once
+#include "RPSS.h"
+
 class Wind
 {
 	friend class Breath;

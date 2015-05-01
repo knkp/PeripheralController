@@ -1,6 +1,4 @@
-#include <Arduino.h>
-#include "Wind.h"
-
+#include "RPSS.h"
 Wind::Wind(void)
 {
 	breath,

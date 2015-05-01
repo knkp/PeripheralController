@@ -1,4 +1,8 @@
 #pragma once
+
+#include "RPSS.h"
+
+
 class Cabinet
 {
 	friend class Breath;
