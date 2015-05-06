@@ -5,18 +5,12 @@
 
 class Breath
 {
-	friend class Cabinet;
-
-private://can not be accesed
-	int 
-		breath;
+       int threshold; // set this during calibration, use it to see if patron is above or below the legal limit
 
 public:
 	Breath(void);
 	~Breath(void);
-
-	void DoYourBest(int &breath);
-	void Pass(int &breath);
-	void Faile();
+        void breath_calibrate();
+        char check_patron_BAC();
 };
 

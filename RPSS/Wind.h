@@ -3,17 +3,13 @@
 
 class Wind
 {
-	friend class Breath;
 
-	private://can not be accesed
-	double 
-		breath,
-		windSpeed;
+        int threshold; // set this during calibration, use it to verify patron is breathing  
 
 public:
 	Wind(void);
 	~Wind(void);
-
-	void WindSensor(int &breath);
+        void wind_calibrate();
+        void waitForBreath();
 };
 

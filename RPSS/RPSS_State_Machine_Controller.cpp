@@ -18,38 +18,58 @@ void RPSS_State_Machine_Controller::RPSS_Begin(){
 // remember to initialize the first state to GOT_NEW_PATRON instead of default like on the gui handler, it is only t
 void RPSS_State_Machine_Controller::handler(){
         switch(currentState){
-		case GOT_NEW_PATRON:
+                case START:
                         comm_driver.wait_for_command();
-                        comm_driver.setMessage(scanner.Scan());
-                        currentState = comm_driver.update_GUI();
+                        currentState = comm_driver.update_State();
+		case GOT_NEW_PATRON:
+                        result = scanner.Scan();
+                        comm_driver.setMessage(result);
+                        comm_driver.send_result();
+                        comm_driver.wait_for_command();
+                        currentState = comm_driver.update_State();
 			break;
 		case IN_DATABASE:
+                        windSensor.waitForBreath();
+                        result = breathSensor.check_patron_BAC();
+                        comm_driver.setMessage(result);
+                        comm_driver.send_result();
                         comm_driver.wait_for_command();
-                        currentState = comm_driver.update_GUI();
+                        currentState = comm_driver.update_State();
 			break;
 		case NOT_IN_DATABASE:
+                        cabinetID = cabinet.get_new_cabinet();
+                        result = scanner.add_patron_to_DB(cabinetID);
+                        comm_driver.setMessage(result);
+                        comm_driver.send_result();
                         comm_driver.wait_for_command();
-                        currentState = comm_driver.update_GUI();
+                        currentState = comm_driver.update_State();
 			break;
 		case BREATHALYZER_PASS:
+                        result = cabinet.openPatronCabinet();
+                        comm_driver.setMessage(result);
+                        comm_driver.send_result();
                         comm_driver.wait_for_command();
-                        currentState = comm_driver.update_GUI();
-			break;
+                        currentState = comm_driver.update_State();
+                        break;
 		case BREATHALYZER_FAIL:
+                        // I think I will let the pi manager handle this side since management intervention is required
                         comm_driver.wait_for_command();
-                        currentState = comm_driver.update_GUI();
+                        currentState = comm_driver.update_State();
 			break;
 		case RPSS_DEFAULT:
+                        comm_driver.setMessage(DEFAULT_ACK);
+                        comm_driver.send_result();
                         comm_driver.wait_for_command();
-                        currentState = comm_driver.update_GUI();
+                        currentState = comm_driver.update_State();
 			break;
 		case MAINTENANCE:
+                        // we haven't defined what maintenance mode really does - it is likely that will be handled by the RPSS manager as well.
                         comm_driver.wait_for_command();
-                        currentState = comm_driver.update_GUI();
+                        currentState = comm_driver.update_State();
 			break;
 		default:
                         comm_driver.wait_for_command();
-                        currentState = comm_driver.update_GUI();
+                        currentState = comm_driver.update_State();
                         break;
         }
 

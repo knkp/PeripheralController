@@ -1,8 +1,6 @@
 #include "RPSS.h"
 Wind::Wind(void)
 {
-	breath,
-	windSpeed;
 }
 
 
@@ -10,18 +8,12 @@ Wind::~Wind(void)
 {
 }
 
-void Wind::WindSensor(int &breath)
-{
-	Serial.println(" Enter wind speed"); //for testing 
-	windSpeed = analogRead(A4);
+void Wind::wind_calibrate(){
+   // set the threshold to know when someone is breathing 
+}
 
-	if(windSpeed == 1)
-	{
-		breath = 1;
-	}
-
-	if(windSpeed == 0)
-	{
-		breath = 0;
-	}
+void Wind::waitForBreath(){
+ 
+   // begin listening to wind speed
+   // block until wind passes threshold 
 }

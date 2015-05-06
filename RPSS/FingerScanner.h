@@ -10,6 +10,6 @@ public:
 	~FingerScanner(void);
         void FingerScannerBegin();
 	char Scan();
-        void DB_Check();
+        char add_patron_to_DB(int);
 };
 

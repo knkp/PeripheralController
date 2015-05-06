@@ -40,8 +40,8 @@ class Comm_Driver{
   // communication driver is implemented on the same way on the tiva
   
   void setMessage(char);
-  RPSS_States update_GUI(void);
+  RPSS_States update_State(void);
   void wait_for_command(void);
-  void send_result(char);
+  void send_result(void);
   
 };

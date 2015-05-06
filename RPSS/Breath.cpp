@@ -2,52 +2,29 @@
 
 
 
-Cabinet
-		cab;
-
-Wind
-	speed;
-
 Breath::Breath(void)
 {
-	breath;
 }
 
 
 Breath::~Breath(void)
 {
 }
-
-void Breath::DoYourBest(int &breath) 
-{
-	Serial.println(" Please provide breath sample. ");
-	breath = analogRead(A1);
-
-	speed.WindSensor(breath);
-
-	if(breath == 1) // yes
-	{
-		Pass(breath);
-	}
-
-	if(breath == 0) // no
-	{
-		Faile();
-	}	
+void Breath::breath_calibrate(){
+   // set the threshold to the correct value 
 }
 
-// Protocall if the pass
-void Breath::Pass(int &breath) 
-{
-	Serial.println(" Passed \n\n");
-
-	cab.Check(breath);
-}
-
-// Protocall if the faile
-void Breath::Faile() 
-{
-	Serial.println(" Failed  \n\n");
-
-	cab.Closed();
+char Breath::check_patron_BAC(){
+     bool pass;
+    
+    
+    
+     // accumulate enough data from the sensor to perform a BAC check
+    
+     // determine if they have passed or failed and pass the results up the machine
+    
+    if(pass)
+       return BREATHALYZER_TEST_PASS;
+    else
+       return BREATHALYZER_TEST_FAIL;
 }

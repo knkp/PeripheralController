@@ -5,21 +5,12 @@
 
 class Cabinet
 {
-	friend class Breath;
-
-	private://can not be accesed
-	int
-		lock,
-		unlock,
-		breath;
-
+  
 public:
 	Cabinet(void);
 	~Cabinet(void);
+        char openPatronCabinet();
+        int get_new_cabinet();
 
-	void Check(int &breath);
-	void Open();
-	void Closed();
-	void Basket();
 };
 
