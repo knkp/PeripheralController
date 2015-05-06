@@ -15,7 +15,7 @@ void RPSS_State_Machine_Controller::RPSS_Begin(){
    scanner.FingerScannerBegin();
 }
 
-// remember to initialize the first state to GOT_NEW_PATRON instead of default like on the gui handler, it is only t
+// remember to initialize the first state to START
 void RPSS_State_Machine_Controller::handler(){
         switch(currentState){
                 case START:
