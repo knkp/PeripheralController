@@ -21,6 +21,7 @@ void RPSS_State_Machine_Controller::handler(){
                 case START:
                         comm_driver.wait_for_command();
                         currentState = comm_driver.update_State();
+                        break;
 		case GOT_NEW_PATRON:
                         result = scanner.Scan();
                         comm_driver.setMessage(result);
@@ -53,6 +54,9 @@ void RPSS_State_Machine_Controller::handler(){
                         break;
 		case BREATHALYZER_FAIL:
                         // I think I will let the pi manager handle this side since management intervention is required
+                        // I may still do that, but during testing it still needs a response
+                        comm_driver.setMessage(TAXI_DEPLOYED);
+                        comm_driver.send_result();
                         comm_driver.wait_for_command();
                         currentState = comm_driver.update_State();
 			break;

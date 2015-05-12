@@ -20,3 +20,4 @@
 
 
 #define DEBUG // uncomment this statement to test the state machine
+//#define DEBUG_ON_COMPUTER // uncomment this if you are testing on your local PC
