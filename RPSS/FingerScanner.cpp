@@ -1,4 +1,5 @@
 #include "RPSS.h"
+#ifndef DEBUG
 #include <Adafruit_Fingerprint.h>
 #include <SoftwareSerial.h>
 
@@ -6,6 +7,7 @@ uint8_t getFingerprintEnroll(uint8_t id);
 SoftwareSerial mySerial(2, 3);
 
 Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
+#endif
 
 FingerScanner::FingerScanner(void)
 {
@@ -23,6 +25,7 @@ void FingerScanner::FingerScannerBegin(){
 char FingerScanner::Scan()
 {
   bool inDB = false;
+  #ifndef DEBUG
   // scan finger
   Serial.begin(9600);
   Serial.println("fingertest");
@@ -36,8 +39,13 @@ char FingerScanner::Scan()
     Serial.println("Did not find fingerprint sensor :(");
     while (1);
   }
+  #endif
+  
+  return USER_IN_DATABASE;
+  
 }
 
+#ifndef DEBUG
 void loop()                     // run over and over again
 {
   Serial.println("Type in the the name you want to save this finger as...");
@@ -180,9 +188,10 @@ uint8_t getFingerprintEnroll(uint8_t id) {
     return USER_NOT_IN_DATABASE;
   
 }
+#endif
 
 char FingerScanner::add_patron_to_DB(int cabinetID){
-   
+   #ifndef DEBUG
    // add patron and their associated cabinetID to the database
    p = finger.storeModel(id);
   if (p == FINGERPRINT_OK) {
@@ -200,5 +209,7 @@ char FingerScanner::add_patron_to_DB(int cabinetID){
     Serial.println("Unknown error");
     return p;
   }
+  
+  #endif
    return PATRON_REGISTERED_SUCCESSFULLY; 
 }

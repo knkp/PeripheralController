@@ -17,3 +17,6 @@
 #include "RPSS_State_Machine_Controller.h"
 #include "RPSS_States.h"
 #include "Wind.h"
+
+
+#define DEBUG // uncomment this statement to test the state machine
