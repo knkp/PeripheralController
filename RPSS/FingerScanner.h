@@ -12,4 +12,3 @@ public:
 	char Scan();
         char add_patron_to_DB(int);
 };
-
