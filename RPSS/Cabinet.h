@@ -13,4 +13,3 @@ public:
         int get_new_cabinet();
 
 };
-
