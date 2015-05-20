@@ -13,6 +13,7 @@ RPSS_State_Machine_Controller::~RPSS_State_Machine_Controller(){
 void RPSS_State_Machine_Controller::RPSS_Begin(){
    comm_driver.CommBegin(9600); 
    scanner.FingerScannerBegin();
+   windSensor.wind_calibrate();
 }
 
 // remember to initialize the first state to START
@@ -30,7 +31,14 @@ void RPSS_State_Machine_Controller::handler(){
                         currentState = comm_driver.update_State();
 			break;
 		case IN_DATABASE:
-                        windSensor.waitForBreath();
+                        result = windSensor.waitForBreath();
+                        if(result == WIND_THRESHOLD_NOT_REACHED){
+                          comm_driver.setMessage(result);
+                          comm_driver.send_result();
+                          comm_driver.wait_for_command();
+                          currentState = comm_driver.update_State();
+                          break;
+                        }
                         result = breathSensor.check_patron_BAC();
                         comm_driver.setMessage(result);
                         comm_driver.send_result();

@@ -10,6 +10,6 @@ public:
 	Wind(void);
 	~Wind(void);
         void wind_calibrate();
-        void waitForBreath();
+        char waitForBreath();
 };
 

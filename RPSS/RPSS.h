@@ -20,4 +20,5 @@
 
 
 #define DEBUG // uncomment this statement to test the state machine
+#define COMPILE_WIND_SENSOR // if debugging state machine with wind-sensor, uncomment this with DEBUG
 //#define DEBUG_ON_COMPUTER // uncomment this if you are testing on your local PC

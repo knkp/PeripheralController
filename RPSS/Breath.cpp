@@ -12,11 +12,11 @@ Breath::~Breath(void)
 }
 void Breath::breath_calibrate(){
    // set the threshold to the correct value 
+  
 }
 
 char Breath::check_patron_BAC(){
      bool pass;
-    
     
     
      // accumulate enough data from the sensor to perform a BAC check

@@ -24,6 +24,7 @@ This define's the communications driver, it also defines the message command and
 #define TAXI_DEPLOYED 'l'
 #define DEFAULT_STATUS 'm'
 #define DEFAULT_ACK 'n'
+#define WIND_THRESHOLD_NOT_REACHED 'p'
 #define RPSS_ERROR_STATE 'o'
 
 
