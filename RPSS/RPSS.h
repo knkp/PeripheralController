@@ -17,7 +17,7 @@
 #include "RPSS_State_Machine_Controller.h"
 #include "RPSS_States.h"
 #include "Wind.h"
-
+//#include "C:\Program Files (x86)\Arduino\libraries\Adafruit_Fingerprint\Adafruit_Fingerprint.h"
 
 #define DEBUG // uncomment this statement to test the state machine
 #define COMPILE_WIND_SENSOR // if debugging state machine with wind-sensor, uncomment this with DEBUG
