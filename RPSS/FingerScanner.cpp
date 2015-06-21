@@ -1,9 +1,14 @@
 #include "RPSS.h"
 #ifndef DEBUG
 #endif
+
+
+#define POSSIBLE_PATRON_AMOUNT 5  // this is how many patrons are allowed to be in the system (related to how many cabinets total in array)
+
+#define DEBUGGINGSHIT
+
 uint8_t getFingerprintEnroll(uint8_t id);
 SoftwareSerial mySerial(2, 3);
-
 
 Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
 
@@ -19,22 +24,56 @@ FingerScanner::~FingerScanner(void)
 }
 
 void FingerScanner::FingerScannerBegin(){
-//  finger = Adafruit_Fingerprint(mySerial);  
+  uint8_t p = -1;
+
+#ifdef DEBUGGINGSHIT
+  Serial.println("WE MADE IT TO THE FINGER SCANNER BEGIN STATEMENT HOOOOORRRRRRRYYYYYY SHEEEET!");
+#endif
+        
   finger.begin(57600);
+ if (finger.verifyPassword()) {
+    Serial.println("Found fingerprint sensor!");
+  } else {
+    Serial.println("Did not find fingerprint sensor :(");
+    while (1);
+  }
+  int leftOverFingers = 0;
+  for(leftOverFingers = 0; leftOverFingers < POSSIBLE_PATRON_AMOUNT; leftOverFingers++)
+  {
+#ifdef DEBUGGINGSHIT
+  Serial.println("CAN HAZ EMPTY DATABAZZZEE!?");
+#endif
+    finger.deleteModel(leftOverFingers); // being sloppy, code is simple enought though that it's not hard to track down which state we're in during failures -- SC
+  }
+  
+#ifdef DEBUGGINGSHIT
+  Serial.println("we got past the finger scanner begin statement.... motherfucker");
+#endif
 }
 
 //Check's data base for finger ID
 char FingerScanner::Scan()
 {
+
   bool inDB = false;
+  uint8_t p;
+  
   #ifndef DEBUG
 
   #endif
-  if (finger.verifyPassword()) {
-      return USER_NOT_IN_DATABASE;
-  } 
   
-  return USER_IN_DATABASE;
+  p = finger.getImage();
+  switch (p) {
+    case FINGERPRINT_OK:
+      return USER_IN_DATABASE;
+      break;
+    case FINGERPRINT_NOFINGER:
+      return USER_NOT_IN_DATABASE;
+    default:
+      //Serial.println("Unknown error");
+      break;
+    }
+  return USER_NOT_IN_DATABASE;
   
 }
 
@@ -190,7 +229,7 @@ uint8_t getFingerprintEnroll(uint8_t id) {
 char FingerScanner::add_patron_to_DB(int cabinetID){
    #ifndef DEBUG
    // add patron and their associated cabinetID to the database
-   p = finger.storeModel(id);
+   p = finger.storeModel(cabinetID);
   if (p == FINGERPRINT_OK) {
     //Serial.println("Stored!");
   } else if (p == FINGERPRINT_PACKETRECIEVEERR) { 

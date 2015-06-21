@@ -9,11 +9,11 @@ RPSS_State_Machine_Controller::RPSS_State_Machine_Controller(RPSS_States startin
 RPSS_State_Machine_Controller::~RPSS_State_Machine_Controller(){
   
 }
-
 void RPSS_State_Machine_Controller::RPSS_Begin(){
    comm_driver.CommBegin(9600); 
-   scanner.FingerScannerBegin();
+   //scanner.FingerScannerBegin();
    windSensor.wind_calibrate();
+   breathSensor.breath_calibrate();
 }
 
 // remember to initialize the first state to START
@@ -24,7 +24,8 @@ void RPSS_State_Machine_Controller::handler(){
                         currentState = comm_driver.update_State();
                         break;
 		case GOT_NEW_PATRON:
-                        result = scanner.Scan();
+     //                   result = scanner.Scan();
+     
                         comm_driver.setMessage(result);
                         comm_driver.send_result();
                         comm_driver.wait_for_command();
@@ -47,7 +48,7 @@ void RPSS_State_Machine_Controller::handler(){
 			break;
 		case NOT_IN_DATABASE:
                         cabinetID = cabinet.get_new_cabinet();
-                        result = scanner.add_patron_to_DB(cabinetID);
+                     //   result = scanner.add_patron_to_DB(cabinetID);
                         comm_driver.setMessage(result);
                         comm_driver.send_result();
                         comm_driver.wait_for_command();
