@@ -14,6 +14,7 @@ void RPSS_State_Machine_Controller::RPSS_Begin(){
    //scanner.FingerScannerBegin();
    windSensor.wind_calibrate();
    breathSensor.breath_calibrate();
+   cabinet.CabinetBegin();
 }
 
 // remember to initialize the first state to START
@@ -47,15 +48,36 @@ void RPSS_State_Machine_Controller::handler(){
                         currentState = comm_driver.update_State();
 			break;
 		case NOT_IN_DATABASE:
-                        cabinetID = cabinet.get_new_cabinet();
+                      //  cabinetID = cabinet.get_new_cabinet();
                      //   result = scanner.add_patron_to_DB(cabinetID);
                         comm_driver.setMessage(result);
                         comm_driver.send_result();
                         comm_driver.wait_for_command();
                         currentState = comm_driver.update_State();
 			break;
+                case OPEN_CABINET: 
+                        comm_driver.setMessage('k');
+                        comm_driver.send_result(); 
+                        cabinetID = comm_driver.waitForID();
+                        result = cabinet.openPatronCabinet(cabinetID);
+                        comm_driver.setMessage(result);
+                        comm_driver.send_result();
+                        comm_driver.wait_for_command();
+                        currentState = comm_driver.update_State();
+                        break;
+                case CLOSE_CABINET:
+                        comm_driver.setMessage('k');
+                        comm_driver.send_result();
+                        cabinetID = comm_driver.waitForID();
+                        result = cabinet.closePatronCabinet(cabinetID);
+                        comm_driver.setMessage(result);
+                        comm_driver.send_result();
+                        comm_driver.wait_for_command();
+                        currentState = comm_driver.update_State();
+                        break;                
 		case BREATHALYZER_PASS:
-                        result = cabinet.openPatronCabinet();
+                        //result = cabinet.openPatronCabinet();
+                        result = 'k';
                         comm_driver.setMessage(result);
                         comm_driver.send_result();
                         comm_driver.wait_for_command();

@@ -5,14 +5,14 @@
 
 class Cabinet
 {
-  int CabinetID;
+  char CabinetID;
 public:
 	Cabinet(void);
 	~Cabinet(void);
 
         void CabinetBegin(void);
-        char openPatronCabinet();
-        int get_new_cabinet();
+        char openPatronCabinet(int);
+        char closePatronCabinet(int);
 
 };
 

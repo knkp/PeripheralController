@@ -16,6 +16,8 @@ typedef enum {
 	BREATHALYZER_PASS,
 	BREATHALYZER_FAIL,
 	OUTRO,
+        OPEN_CABINET,
+        CLOSE_CABINET,
 	RPSS_DEFAULT,  // must be renamed, causes conflicts with Arduino.h include
 	MAINTENANCE,
 	RPSS_ERROR     // must be renamed, causes conflicts with Arduino.h include

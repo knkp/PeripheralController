@@ -26,7 +26,8 @@ This define's the communications driver, it also defines the message command and
 #define DEFAULT_ACK 'n'
 #define WIND_THRESHOLD_NOT_REACHED 'p'
 #define RPSS_ERROR_STATE 'o'
-
+#define OPEN_CABINET_PLZ 'x'
+#define CLOSE_CABINET_PLZ 'M'
 
 
 
@@ -41,6 +42,7 @@ class Comm_Driver{
   // communication driver is implemented on the same way on the tiva
   
   void setMessage(char);
+  int waitForID();
   RPSS_States update_State(void);
   void wait_for_command(void);
   void send_result(void);

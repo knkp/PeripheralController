@@ -1,6 +1,9 @@
 #include "RPSS.h"
 #include "RPSS_States.h"
 
+// uncomment to check COMM_Driver state transistions
+//#define DEBUG_ON_COMPUTER
+
 Comm_Driver::Comm_Driver(){
 }
 
@@ -67,6 +70,18 @@ Serial.print(message);
                #endif
                state = RPSS_DEFAULT;
                break;
+             case OPEN_CABINET_PLZ:
+               #ifdef DEBUG_ON_COMPUTER
+               Serial.println("Entered Open Cabinet state");
+               #endif
+               state = OPEN_CABINET;
+               break;
+             case CLOSE_CABINET_PLZ:
+               #ifdef DEBUG_ON_COMPUTER
+               Serial.println("Entered Open Cabinet state");
+               #endif
+               state = CLOSE_CABINET;
+               break;
              default: // RPSS_ERROR_STATE
                #ifdef DEBUG_ON_COMPUTER
                Serial.println("Entered ERROR state");
@@ -77,6 +92,12 @@ Serial.print(message);
    return state;
 }
 
+int Comm_Driver::waitForID(){
+  int value;
+  while(!Serial.available());
+  value = Serial.parseInt();
+  return value;
+}
 
 void Comm_Driver::wait_for_command(){
    while(!Serial.available()); // block until character is received
